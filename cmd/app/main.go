@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"os"
 	"os/signal"
@@ -16,7 +17,16 @@ import (
 )
 
 func main() {
-	cfg, err := config.Load("config/app.yml")
+	var configPath string
+	flag.StringVar(&configPath, "config", "", "path to config file")
+	flag.Parse()
+	if configPath == "" {
+		configPath = os.Getenv("CONFIG_PATH")
+	}
+	if configPath == "" {
+		configPath = "config/config.yml"
+	}
+	cfg, err := config.Load(configPath)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "load config:", err)
 		os.Exit(1)

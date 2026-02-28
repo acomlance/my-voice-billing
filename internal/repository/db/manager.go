@@ -6,8 +6,8 @@ import (
 
 	"my-voice-billing/internal/config"
 
-	"github.com/jmoiron/sqlx"
 	_ "github.com/jackc/pgx/v5/stdlib"
+	"github.com/jmoiron/sqlx"
 )
 
 type Manager struct {

@@ -20,16 +20,16 @@ type TokenRepository interface {
 	Delete(ctx context.Context, id int64) error
 }
 
-type TokenService struct {
+type TokenRepo struct {
 	reader *sqlx.DB
 	writer *sqlx.DB
 }
 
-func NewTokenService(m *db.Manager) *TokenService {
-	return &TokenService{reader: m.Reader(), writer: m.Writer()}
+func NewTokenRepo(m *db.Manager) *TokenRepo {
+	return &TokenRepo{reader: m.Reader(), writer: m.Writer()}
 }
 
-func (s *TokenService) GetByID(ctx context.Context, id int64) (*models.Token, error) {
+func (s *TokenRepo) GetByID(ctx context.Context, id int64) (*models.Token, error) {
 	query := fmt.Sprintf("SELECT id, user_id, token, date_create, date_update FROM %s WHERE id = $1", db.TableToken)
 	var t models.Token
 	err := s.reader.GetContext(ctx, &t, query, id)
@@ -42,7 +42,7 @@ func (s *TokenService) GetByID(ctx context.Context, id int64) (*models.Token, er
 	return &t, nil
 }
 
-func (s *TokenService) GetByToken(ctx context.Context, token string) (*models.Token, error) {
+func (s *TokenRepo) GetByToken(ctx context.Context, token string) (*models.Token, error) {
 	query := fmt.Sprintf("SELECT id, user_id, token, date_create, date_update FROM %s WHERE token = $1", db.TableToken)
 	var t models.Token
 	err := s.reader.GetContext(ctx, &t, query, token)
@@ -55,7 +55,7 @@ func (s *TokenService) GetByToken(ctx context.Context, token string) (*models.To
 	return &t, nil
 }
 
-func (s *TokenService) List(ctx context.Context) ([]models.Token, error) {
+func (s *TokenRepo) List(ctx context.Context) ([]models.Token, error) {
 	query := fmt.Sprintf("SELECT id, user_id, token, date_create, date_update FROM %s", db.TableToken)
 	var list []models.Token
 	err := s.reader.SelectContext(ctx, &list, query)
@@ -65,7 +65,7 @@ func (s *TokenService) List(ctx context.Context) ([]models.Token, error) {
 	return list, nil
 }
 
-func (s *TokenService) Create(ctx context.Context, t *models.Token) error {
+func (s *TokenRepo) Create(ctx context.Context, t *models.Token) error {
 	query := fmt.Sprintf("INSERT INTO %s (user_id, token, date_create, date_update) VALUES ($1, $2, NOW(), NOW()) RETURNING id, date_create, date_update", db.TableToken)
 	row := s.writer.QueryRowxContext(ctx, query, t.UserId, t.Token)
 	err := row.Scan(&t.Id, &t.DateCreate, &t.DateUpdate)
@@ -78,7 +78,7 @@ func (s *TokenService) Create(ctx context.Context, t *models.Token) error {
 	return nil
 }
 
-func (s *TokenService) Update(ctx context.Context, t *models.Token) error {
+func (s *TokenRepo) Update(ctx context.Context, t *models.Token) error {
 	query := fmt.Sprintf("UPDATE %s SET token = $2, date_update = NOW() WHERE id = $1 RETURNING date_update", db.TableToken)
 	row := s.writer.QueryRowxContext(ctx, query, t.Id, t.Token)
 	err := row.Scan(&t.DateUpdate)
@@ -91,7 +91,7 @@ func (s *TokenService) Update(ctx context.Context, t *models.Token) error {
 	return nil
 }
 
-func (s *TokenService) Delete(ctx context.Context, id int64) error {
+func (s *TokenRepo) Delete(ctx context.Context, id int64) error {
 	query := fmt.Sprintf("DELETE FROM %s WHERE id = $1", db.TableToken)
 	res, err := s.writer.ExecContext(ctx, query, id)
 	if err != nil {

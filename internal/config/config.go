@@ -31,8 +31,8 @@ type GrpcConfig struct {
 type Config struct {
 	Environment string                 `mapstructure:"environment"`
 	Grpc        GrpcConfig             `mapstructure:"grpc"`
-	Database    map[string]DBConnector  `mapstructure:"database"`
-	Log         LogConfig               `mapstructure:"log"`
+	Database    map[string]DBConnector `mapstructure:"database"`
+	Log         LogConfig              `mapstructure:"log"`
 }
 
 func (c *Config) Connector(alias string) (DBConnector, bool) {

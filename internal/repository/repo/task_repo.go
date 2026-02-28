@@ -19,16 +19,16 @@ type TaskRepository interface {
 	Delete(ctx context.Context, id int64) error
 }
 
-type TaskService struct {
+type TaskRepo struct {
 	reader *sqlx.DB
 	writer *sqlx.DB
 }
 
-func NewTaskService(m *db.Manager) *TaskService {
-	return &TaskService{reader: m.Reader(), writer: m.Writer()}
+func NewTaskRepo(m *db.Manager) *TaskRepo {
+	return &TaskRepo{reader: m.Reader(), writer: m.Writer()}
 }
 
-func (s *TaskService) GetByID(ctx context.Context, id int64) (*models.Task, error) {
+func (s *TaskRepo) GetByID(ctx context.Context, id int64) (*models.Task, error) {
 	query := fmt.Sprintf("SELECT id, token_id, task, date_create, date_update FROM %s WHERE id = $1", db.TableTask)
 	var t models.Task
 	err := s.reader.GetContext(ctx, &t, query, id)
@@ -41,7 +41,7 @@ func (s *TaskService) GetByID(ctx context.Context, id int64) (*models.Task, erro
 	return &t, nil
 }
 
-func (s *TaskService) ListByTokenID(ctx context.Context, tokenID int64) ([]models.Task, error) {
+func (s *TaskRepo) ListByTokenID(ctx context.Context, tokenID int64) ([]models.Task, error) {
 	query := fmt.Sprintf("SELECT id, token_id, task, date_create, date_update FROM %s WHERE token_id = $1", db.TableTask)
 	var list []models.Task
 	err := s.reader.SelectContext(ctx, &list, query, tokenID)
@@ -51,7 +51,7 @@ func (s *TaskService) ListByTokenID(ctx context.Context, tokenID int64) ([]model
 	return list, nil
 }
 
-func (s *TaskService) Create(ctx context.Context, t *models.Task) error {
+func (s *TaskRepo) Create(ctx context.Context, t *models.Task) error {
 	query := fmt.Sprintf("INSERT INTO %s (token_id, task, date_create, date_update) VALUES ($1, $2, NOW(), NOW()) RETURNING id, date_create, date_update", db.TableTask)
 	row := s.writer.QueryRowxContext(ctx, query, t.TokenId, t.Task)
 	err := row.Scan(&t.Id, &t.DateCreate, &t.DateUpdate)
@@ -67,7 +67,7 @@ func (s *TaskService) Create(ctx context.Context, t *models.Task) error {
 	return nil
 }
 
-func (s *TaskService) Update(ctx context.Context, t *models.Task) error {
+func (s *TaskRepo) Update(ctx context.Context, t *models.Task) error {
 	query := fmt.Sprintf("UPDATE %s SET task = $2, date_update = NOW() WHERE id = $1 RETURNING date_update", db.TableTask)
 	row := s.writer.QueryRowxContext(ctx, query, t.Id, t.Task)
 	err := row.Scan(&t.DateUpdate)
@@ -80,7 +80,7 @@ func (s *TaskService) Update(ctx context.Context, t *models.Task) error {
 	return nil
 }
 
-func (s *TaskService) Delete(ctx context.Context, id int64) error {
+func (s *TaskRepo) Delete(ctx context.Context, id int64) error {
 	query := fmt.Sprintf("DELETE FROM %s WHERE id = $1", db.TableTask)
 	res, err := s.writer.ExecContext(ctx, query, id)
 	if err != nil {
