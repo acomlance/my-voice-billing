@@ -4,87 +4,23 @@ package billing;
 
 option go_package = "my-voice-billing/internal/transport/grpc/pb";
 
-service AccountService {
-  rpc GetAccount(GetAccountRequest) returns (GetAccountResponse);
-  rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse);
-  rpc UpdateAccount(UpdateAccountRequest) returns (UpdateAccountResponse);
-}
-
 service TaskService {
-  rpc GetTask(GetTaskRequest) returns (GetTaskResponse);
-  rpc GetTaskByToken(GetTaskByTokenRequest) returns (GetTaskResponse);
-  rpc ListTasksByAccountID(ListTasksByAccountIDRequest) returns (ListTasksByAccountIDResponse);
   rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
-  rpc DeleteTask(DeleteTaskRequest) returns (DeleteTaskResponse);
-}
-
-message GetAccountRequest {
-  int64 id = 1;
-}
-
-message GetAccountResponse {
-  int64 id = 1;
-  int64 balance = 2;
-  int64 reserve = 3;
-  int32 state = 4;
-}
-
-message CreateAccountRequest {
-  int64 id = 1;
-  int64 balance = 2;
-  int64 reserve = 3;
-  int32 state = 4;
-}
-
-message CreateAccountResponse {
-  int64 id = 1;
-}
-
-message UpdateAccountRequest {
-  int64 id = 1;
-  int64 balance = 2;
-  int64 reserve = 3;
-  int32 state = 4;
-}
-
-message UpdateAccountResponse {}
-
-message GetTaskRequest {
-  int64 id = 1;
-}
-
-message GetTaskByTokenRequest {
-  string token = 1;
-}
-
-message GetTaskResponse {
-  int64 id = 1;
-  string token = 2;
-  int64 account_id = 3;
-  int64 reserved_tokens = 4;
-}
-
-message ListTasksByAccountIDRequest {
-  int64 account_id = 1;
-}
-
-message ListTasksByAccountIDResponse {
-  repeated GetTaskResponse tasks = 1;
+  rpc DeleteTaskByToken(DeleteTaskByTokenRequest) returns (DeleteTaskByTokenResponse);
 }
 
 message CreateTaskRequest {
-  string token = 1;
-  int64 account_id = 2;
-  int64 reserved_tokens = 3;
+  int64 account_id = 1;
+  int64 reserved_tokens = 2;
 }
 
 message CreateTaskResponse {
-  int64 id = 1;
+  string token = 1;
 }
 
-message DeleteTaskRequest {
-  int64 id = 1;
+message DeleteTaskByTokenRequest {
+  string token = 1;
+  int64 closed_tokens = 2;  // количество токенов, на которое таск закрывается (списывается с balance)
 }
 
-message DeleteTaskResponse {}
-
+message DeleteTaskByTokenResponse {}

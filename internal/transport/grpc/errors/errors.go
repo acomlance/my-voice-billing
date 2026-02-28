@@ -17,16 +17,29 @@ func IsConflict(err error) bool {
 	return errors.Is(err, domain.ErrConflict)
 }
 
-// ToStatus маппит domain-ошибки в gRPC status.
+func IsInvalid(err error) bool {
+	return errors.Is(err, domain.ErrInvalid)
+}
+
+func IsInsufficientBalance(err error) bool {
+	return errors.Is(err, domain.ErrInsufficientBalance)
+}
+
 func ToStatus(err error) *status.Status {
 	if err == nil {
 		return nil
 	}
 	if IsNotFound(err) {
-		return status.New(codes.NotFound, err.Error())
+		return status.New(codes.NotFound, "")
 	}
 	if IsConflict(err) {
-		return status.New(codes.AlreadyExists, err.Error())
+		return status.New(codes.AlreadyExists, "")
 	}
-	return status.New(codes.Internal, err.Error())
+	if IsInvalid(err) {
+		return status.New(codes.InvalidArgument, "")
+	}
+	if IsInsufficientBalance(err) {
+		return status.New(codes.FailedPrecondition, "")
+	}
+	return status.New(codes.Internal, "")
 }

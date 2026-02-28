@@ -28,6 +28,10 @@ func main() {
 		fmt.Fprintln(os.Stderr, "load config:", err)
 		os.Exit(1)
 	}
+	if err := config.Validate(cfg); err != nil {
+		fmt.Fprintln(os.Stderr, "config:", err)
+		os.Exit(1)
+	}
 	tools.InitFromConfig(cfg.Log.Level, cfg.Log.Dir)
 
 	ctx := context.Background()
@@ -37,11 +41,7 @@ func main() {
 	defer container.Shutdown()
 
 	grpcServer := grpc.NewServer(container.Get())
-	port := cfg.Grpc.Port
-	if port <= 0 {
-		port = 50051
-	}
-	addr := fmt.Sprintf(":%d", port)
+	addr := fmt.Sprintf(":%d", cfg.Grpc.Port)
 	go func() {
 		if err := grpc.Serve(grpcServer, addr); err != nil {
 			log.Fatal().Err(err).Str("addr", addr).Msg("grpc serve")

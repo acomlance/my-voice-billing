@@ -17,8 +17,7 @@ func NewServer(c *container.Container) *grpc.Server {
 		grpc.ChainUnaryInterceptor(middleware.UnaryRecovery),
 	}
 	s := grpc.NewServer(opts...)
-	pb.RegisterAccountServiceServer(s, handlers.NewAccountServer(c))
-	pb.RegisterTaskServiceServer(s, handlers.NewTaskServer(c))
+	pb.RegisterTaskServiceServer(s, handlers.NewTaskServer(c.TaskLogic))
 	reflection.Register(s)
 	return s
 }

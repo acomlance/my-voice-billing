@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 
+	"my-voice-billing/internal/domain"
 	"my-voice-billing/internal/models"
 	"my-voice-billing/internal/repository/repo"
 )
@@ -24,10 +25,16 @@ func (l *AccountLogic) List(ctx context.Context) ([]models.Account, error) {
 }
 
 func (l *AccountLogic) Create(ctx context.Context, a *models.Account) error {
+	if a.Balance < a.Reserve {
+		return domain.ErrInvalid
+	}
 	return l.repo.Create(ctx, a)
 }
 
 func (l *AccountLogic) Update(ctx context.Context, a *models.Account) error {
+	if a.Balance < a.Reserve {
+		return domain.ErrInvalid
+	}
 	return l.repo.Update(ctx, a)
 }
 

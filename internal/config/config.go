@@ -43,7 +43,7 @@ func (c *Config) Connector(alias string) (DBConnector, bool) {
 	return conn, ok
 }
 
-// Load читает конфиг из YAML-файла
+// Load читает конфиг из YAML-файла; дефолты задаются только здесь
 func Load(path string) (*Config, error) {
 	v := viper.New()
 	v.SetConfigFile(path)
@@ -55,5 +55,19 @@ func Load(path string) (*Config, error) {
 	if err := v.Unmarshal(&cfg); err != nil {
 		return nil, fmt.Errorf("unmarshal config: %w", err)
 	}
+	if cfg.Grpc.Port <= 0 {
+		cfg.Grpc.Port = 50051
+	}
 	return &cfg, nil
+}
+
+// Validate проверяет конфиг перед использованием (порт, коннектор write)
+func Validate(c *Config) error {
+	if c.Grpc.Port <= 0 {
+		return fmt.Errorf("grpc.port must be positive")
+	}
+	if _, ok := c.Connector("write"); !ok {
+		return fmt.Errorf("database connector 'write' not found")
+	}
+	return nil
 }
