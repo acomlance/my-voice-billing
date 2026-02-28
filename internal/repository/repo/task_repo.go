@@ -13,9 +13,9 @@ import (
 
 type TaskRepository interface {
 	GetByID(ctx context.Context, id int64) (*models.Task, error)
-	ListByTokenID(ctx context.Context, tokenID int64) ([]models.Task, error)
+	GetByToken(ctx context.Context, token string) (*models.Task, error)
+	ListByAccountID(ctx context.Context, accountID int64) ([]models.Task, error)
 	Create(ctx context.Context, t *models.Task) error
-	Update(ctx context.Context, t *models.Task) error
 	Delete(ctx context.Context, id int64) error
 }
 
@@ -29,7 +29,7 @@ func NewTaskRepo(m *db.Manager) *TaskRepo {
 }
 
 func (s *TaskRepo) GetByID(ctx context.Context, id int64) (*models.Task, error) {
-	query := fmt.Sprintf("SELECT id, token_id, task, date_create, date_update FROM %s WHERE id = $1", db.TableTask)
+	query := fmt.Sprintf("SELECT id, token, account_id, reserved_tokens, date_create FROM %s WHERE id = $1", db.TableTasks)
 	var t models.Task
 	err := s.reader.GetContext(ctx, &t, query, id)
 	if err != nil {
@@ -41,10 +41,23 @@ func (s *TaskRepo) GetByID(ctx context.Context, id int64) (*models.Task, error) 
 	return &t, nil
 }
 
-func (s *TaskRepo) ListByTokenID(ctx context.Context, tokenID int64) ([]models.Task, error) {
-	query := fmt.Sprintf("SELECT id, token_id, task, date_create, date_update FROM %s WHERE token_id = $1", db.TableTask)
+func (s *TaskRepo) GetByToken(ctx context.Context, token string) (*models.Task, error) {
+	query := fmt.Sprintf("SELECT id, token, account_id, reserved_tokens, date_create FROM %s WHERE token = $1", db.TableTasks)
+	var t models.Task
+	err := s.reader.GetContext(ctx, &t, query, token)
+	if err != nil {
+		if db.IsNoRowsError(err) {
+			return nil, fmt.Errorf("task: %w", domain.ErrNotFound)
+		}
+		return nil, err
+	}
+	return &t, nil
+}
+
+func (s *TaskRepo) ListByAccountID(ctx context.Context, accountID int64) ([]models.Task, error) {
+	query := fmt.Sprintf("SELECT id, token, account_id, reserved_tokens, date_create FROM %s WHERE account_id = $1", db.TableTasks)
 	var list []models.Task
-	err := s.reader.SelectContext(ctx, &list, query, tokenID)
+	err := s.reader.SelectContext(ctx, &list, query, accountID)
 	if err != nil {
 		return nil, err
 	}
@@ -52,9 +65,9 @@ func (s *TaskRepo) ListByTokenID(ctx context.Context, tokenID int64) ([]models.T
 }
 
 func (s *TaskRepo) Create(ctx context.Context, t *models.Task) error {
-	query := fmt.Sprintf("INSERT INTO %s (token_id, task, date_create, date_update) VALUES ($1, $2, NOW(), NOW()) RETURNING id, date_create, date_update", db.TableTask)
-	row := s.writer.QueryRowxContext(ctx, query, t.TokenId, t.Task)
-	err := row.Scan(&t.Id, &t.DateCreate, &t.DateUpdate)
+	query := fmt.Sprintf("INSERT INTO %s (token, account_id, reserved_tokens, date_create) VALUES ($1, $2, $3, NOW()) RETURNING id, date_create", db.TableTasks)
+	row := s.writer.QueryRowxContext(ctx, query, t.Token, t.AccountId, t.ReservedTokens)
+	err := row.Scan(&t.Id, &t.DateCreate)
 	if err != nil {
 		if db.IsDuplicateError(err) {
 			return fmt.Errorf("task: %w", domain.ErrConflict)
@@ -67,21 +80,8 @@ func (s *TaskRepo) Create(ctx context.Context, t *models.Task) error {
 	return nil
 }
 
-func (s *TaskRepo) Update(ctx context.Context, t *models.Task) error {
-	query := fmt.Sprintf("UPDATE %s SET task = $2, date_update = NOW() WHERE id = $1 RETURNING date_update", db.TableTask)
-	row := s.writer.QueryRowxContext(ctx, query, t.Id, t.Task)
-	err := row.Scan(&t.DateUpdate)
-	if err != nil {
-		if db.IsNoRowsError(err) {
-			return fmt.Errorf("task: %w", domain.ErrNotFound)
-		}
-		return err
-	}
-	return nil
-}
-
 func (s *TaskRepo) Delete(ctx context.Context, id int64) error {
-	query := fmt.Sprintf("DELETE FROM %s WHERE id = $1", db.TableTask)
+	query := fmt.Sprintf("DELETE FROM %s WHERE id = $1", db.TableTasks)
 	res, err := s.writer.ExecContext(ctx, query, id)
 	if err != nil {
 		return err

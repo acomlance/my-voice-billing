@@ -18,12 +18,12 @@ var (
 type Container struct {
 	Config *config.Config
 
-	DB        *db.Manager
-	TokenRepo *repo.TokenRepo
-	TaskRepo  *repo.TaskRepo
+	DB          *db.Manager
+	AccountRepo *repo.AccountRepo
+	TaskRepo    *repo.TaskRepo
 
-	TokenLogic *logic.TokenLogic
-	TaskLogic  *logic.TaskLogic
+	AccountLogic *logic.AccountLogic
+	TaskLogic    *logic.TaskLogic
 }
 
 func Init(ctx context.Context, cfg *config.Config) error {
@@ -35,10 +35,10 @@ func Init(ctx context.Context, cfg *config.Config) error {
 			initErr = err
 			return
 		}
-		c.TokenRepo = repo.NewTokenRepo(c.DB)
+		c.AccountRepo = repo.NewAccountRepo(c.DB)
 		c.TaskRepo = repo.NewTaskRepo(c.DB)
-		c.TokenLogic = logic.NewTokenLogic(c.TokenRepo)
-		c.TaskLogic = logic.NewTaskLogic(c.TaskRepo, c.TokenRepo)
+		c.AccountLogic = logic.NewAccountLogic(c.AccountRepo)
+		c.TaskLogic = logic.NewTaskLogic(c.TaskRepo, c.AccountRepo)
 	})
 	return initErr
 }

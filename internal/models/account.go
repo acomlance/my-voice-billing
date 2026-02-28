@@ -2,10 +2,11 @@ package models
 
 import "time"
 
-type Token struct {
+type Account struct {
 	Id         int64      `db:"id"`
-	UserId     int64      `db:"user_id"`
-	Token      string     `db:"token"`
+	Balance    int64      `db:"balance"`
+	Reserve    int64      `db:"reserve"`
+	State      int16      `db:"state"`
 	DateCreate *time.Time `db:"date_create"`
 	DateUpdate *time.Time `db:"date_update"`
 }

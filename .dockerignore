@@ -1,0 +1,9 @@
+.git
+.gitignore
+build/
+logs/
+memory-bank/
+*.md
+.idea/
+.env
+.env.*

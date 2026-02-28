@@ -1,6 +1,6 @@
 package db
 
 const (
-	TableToken = "token"
-	TableTask  = "task"
+	TableAccounts = "public.accounts"
+	TableTasks    = "public.tasks"
 )

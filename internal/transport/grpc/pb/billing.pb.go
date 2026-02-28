@@ -21,27 +21,27 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type GetTokenRequest struct {
+type GetAccountRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetTokenRequest) Reset() {
-	*x = GetTokenRequest{}
+func (x *GetAccountRequest) Reset() {
+	*x = GetAccountRequest{}
 	mi := &file_billing_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetTokenRequest) String() string {
+func (x *GetAccountRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetTokenRequest) ProtoMessage() {}
+func (*GetAccountRequest) ProtoMessage() {}
 
-func (x *GetTokenRequest) ProtoReflect() protoreflect.Message {
+func (x *GetAccountRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_billing_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -53,41 +53,42 @@ func (x *GetTokenRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetTokenRequest.ProtoReflect.Descriptor instead.
-func (*GetTokenRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetAccountRequest.ProtoReflect.Descriptor instead.
+func (*GetAccountRequest) Descriptor() ([]byte, []int) {
 	return file_billing_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *GetTokenRequest) GetId() int64 {
+func (x *GetAccountRequest) GetId() int64 {
 	if x != nil {
 		return x.Id
 	}
 	return 0
 }
 
-type GetTokenResponse struct {
+type GetAccountResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	UserId        int64                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Token         string                 `protobuf:"bytes,3,opt,name=token,proto3" json:"token,omitempty"`
+	Balance       int64                  `protobuf:"varint,2,opt,name=balance,proto3" json:"balance,omitempty"`
+	Reserve       int64                  `protobuf:"varint,3,opt,name=reserve,proto3" json:"reserve,omitempty"`
+	State         int32                  `protobuf:"varint,4,opt,name=state,proto3" json:"state,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetTokenResponse) Reset() {
-	*x = GetTokenResponse{}
+func (x *GetAccountResponse) Reset() {
+	*x = GetAccountResponse{}
 	mi := &file_billing_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetTokenResponse) String() string {
+func (x *GetAccountResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetTokenResponse) ProtoMessage() {}
+func (*GetAccountResponse) ProtoMessage() {}
 
-func (x *GetTokenResponse) ProtoReflect() protoreflect.Message {
+func (x *GetAccountResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_billing_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -99,54 +100,63 @@ func (x *GetTokenResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetTokenResponse.ProtoReflect.Descriptor instead.
-func (*GetTokenResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetAccountResponse.ProtoReflect.Descriptor instead.
+func (*GetAccountResponse) Descriptor() ([]byte, []int) {
 	return file_billing_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *GetTokenResponse) GetId() int64 {
+func (x *GetAccountResponse) GetId() int64 {
 	if x != nil {
 		return x.Id
 	}
 	return 0
 }
 
-func (x *GetTokenResponse) GetUserId() int64 {
+func (x *GetAccountResponse) GetBalance() int64 {
 	if x != nil {
-		return x.UserId
+		return x.Balance
 	}
 	return 0
 }
 
-func (x *GetTokenResponse) GetToken() string {
+func (x *GetAccountResponse) GetReserve() int64 {
 	if x != nil {
-		return x.Token
+		return x.Reserve
 	}
-	return ""
+	return 0
 }
 
-type CreateTokenRequest struct {
+func (x *GetAccountResponse) GetState() int32 {
+	if x != nil {
+		return x.State
+	}
+	return 0
+}
+
+type CreateAccountRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Balance       int64                  `protobuf:"varint,2,opt,name=balance,proto3" json:"balance,omitempty"`
+	Reserve       int64                  `protobuf:"varint,3,opt,name=reserve,proto3" json:"reserve,omitempty"`
+	State         int32                  `protobuf:"varint,4,opt,name=state,proto3" json:"state,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateTokenRequest) Reset() {
-	*x = CreateTokenRequest{}
+func (x *CreateAccountRequest) Reset() {
+	*x = CreateAccountRequest{}
 	mi := &file_billing_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateTokenRequest) String() string {
+func (x *CreateAccountRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateTokenRequest) ProtoMessage() {}
+func (*CreateAccountRequest) ProtoMessage() {}
 
-func (x *CreateTokenRequest) ProtoReflect() protoreflect.Message {
+func (x *CreateAccountRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_billing_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -158,46 +168,60 @@ func (x *CreateTokenRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateTokenRequest.ProtoReflect.Descriptor instead.
-func (*CreateTokenRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use CreateAccountRequest.ProtoReflect.Descriptor instead.
+func (*CreateAccountRequest) Descriptor() ([]byte, []int) {
 	return file_billing_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *CreateTokenRequest) GetUserId() int64 {
+func (x *CreateAccountRequest) GetId() int64 {
 	if x != nil {
-		return x.UserId
+		return x.Id
 	}
 	return 0
 }
 
-func (x *CreateTokenRequest) GetToken() string {
+func (x *CreateAccountRequest) GetBalance() int64 {
 	if x != nil {
-		return x.Token
+		return x.Balance
 	}
-	return ""
+	return 0
 }
 
-type CreateTokenResponse struct {
+func (x *CreateAccountRequest) GetReserve() int64 {
+	if x != nil {
+		return x.Reserve
+	}
+	return 0
+}
+
+func (x *CreateAccountRequest) GetState() int32 {
+	if x != nil {
+		return x.State
+	}
+	return 0
+}
+
+type CreateAccountResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateTokenResponse) Reset() {
-	*x = CreateTokenResponse{}
+func (x *CreateAccountResponse) Reset() {
+	*x = CreateAccountResponse{}
 	mi := &file_billing_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateTokenResponse) String() string {
+func (x *CreateAccountResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateTokenResponse) ProtoMessage() {}
+func (*CreateAccountResponse) ProtoMessage() {}
 
-func (x *CreateTokenResponse) ProtoReflect() protoreflect.Message {
+func (x *CreateAccountResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_billing_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -209,16 +233,120 @@ func (x *CreateTokenResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateTokenResponse.ProtoReflect.Descriptor instead.
-func (*CreateTokenResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use CreateAccountResponse.ProtoReflect.Descriptor instead.
+func (*CreateAccountResponse) Descriptor() ([]byte, []int) {
 	return file_billing_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *CreateTokenResponse) GetId() int64 {
+func (x *CreateAccountResponse) GetId() int64 {
 	if x != nil {
 		return x.Id
 	}
 	return 0
+}
+
+type UpdateAccountRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Balance       int64                  `protobuf:"varint,2,opt,name=balance,proto3" json:"balance,omitempty"`
+	Reserve       int64                  `protobuf:"varint,3,opt,name=reserve,proto3" json:"reserve,omitempty"`
+	State         int32                  `protobuf:"varint,4,opt,name=state,proto3" json:"state,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateAccountRequest) Reset() {
+	*x = UpdateAccountRequest{}
+	mi := &file_billing_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateAccountRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateAccountRequest) ProtoMessage() {}
+
+func (x *UpdateAccountRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_billing_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateAccountRequest.ProtoReflect.Descriptor instead.
+func (*UpdateAccountRequest) Descriptor() ([]byte, []int) {
+	return file_billing_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *UpdateAccountRequest) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UpdateAccountRequest) GetBalance() int64 {
+	if x != nil {
+		return x.Balance
+	}
+	return 0
+}
+
+func (x *UpdateAccountRequest) GetReserve() int64 {
+	if x != nil {
+		return x.Reserve
+	}
+	return 0
+}
+
+func (x *UpdateAccountRequest) GetState() int32 {
+	if x != nil {
+		return x.State
+	}
+	return 0
+}
+
+type UpdateAccountResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateAccountResponse) Reset() {
+	*x = UpdateAccountResponse{}
+	mi := &file_billing_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateAccountResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateAccountResponse) ProtoMessage() {}
+
+func (x *UpdateAccountResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_billing_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateAccountResponse.ProtoReflect.Descriptor instead.
+func (*UpdateAccountResponse) Descriptor() ([]byte, []int) {
+	return file_billing_proto_rawDescGZIP(), []int{5}
 }
 
 type GetTaskRequest struct {
@@ -230,7 +358,7 @@ type GetTaskRequest struct {
 
 func (x *GetTaskRequest) Reset() {
 	*x = GetTaskRequest{}
-	mi := &file_billing_proto_msgTypes[4]
+	mi := &file_billing_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -242,7 +370,7 @@ func (x *GetTaskRequest) String() string {
 func (*GetTaskRequest) ProtoMessage() {}
 
 func (x *GetTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_billing_proto_msgTypes[4]
+	mi := &file_billing_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -255,7 +383,7 @@ func (x *GetTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTaskRequest.ProtoReflect.Descriptor instead.
 func (*GetTaskRequest) Descriptor() ([]byte, []int) {
-	return file_billing_proto_rawDescGZIP(), []int{4}
+	return file_billing_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *GetTaskRequest) GetId() int64 {
@@ -265,18 +393,63 @@ func (x *GetTaskRequest) GetId() int64 {
 	return 0
 }
 
-type GetTaskResponse struct {
+type GetTaskByTokenRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	TokenId       int64                  `protobuf:"varint,2,opt,name=token_id,json=tokenId,proto3" json:"token_id,omitempty"`
-	Task          string                 `protobuf:"bytes,3,opt,name=task,proto3" json:"task,omitempty"`
+	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
+func (x *GetTaskByTokenRequest) Reset() {
+	*x = GetTaskByTokenRequest{}
+	mi := &file_billing_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTaskByTokenRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTaskByTokenRequest) ProtoMessage() {}
+
+func (x *GetTaskByTokenRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_billing_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTaskByTokenRequest.ProtoReflect.Descriptor instead.
+func (*GetTaskByTokenRequest) Descriptor() ([]byte, []int) {
+	return file_billing_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *GetTaskByTokenRequest) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
+type GetTaskResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Id             int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Token          string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	AccountId      int64                  `protobuf:"varint,3,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	ReservedTokens int64                  `protobuf:"varint,4,opt,name=reserved_tokens,json=reservedTokens,proto3" json:"reserved_tokens,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
 func (x *GetTaskResponse) Reset() {
 	*x = GetTaskResponse{}
-	mi := &file_billing_proto_msgTypes[5]
+	mi := &file_billing_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -288,7 +461,7 @@ func (x *GetTaskResponse) String() string {
 func (*GetTaskResponse) ProtoMessage() {}
 
 func (x *GetTaskResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_billing_proto_msgTypes[5]
+	mi := &file_billing_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -301,7 +474,7 @@ func (x *GetTaskResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTaskResponse.ProtoReflect.Descriptor instead.
 func (*GetTaskResponse) Descriptor() ([]byte, []int) {
-	return file_billing_proto_rawDescGZIP(), []int{5}
+	return file_billing_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *GetTaskResponse) GetId() int64 {
@@ -311,31 +484,127 @@ func (x *GetTaskResponse) GetId() int64 {
 	return 0
 }
 
-func (x *GetTaskResponse) GetTokenId() int64 {
+func (x *GetTaskResponse) GetToken() string {
 	if x != nil {
-		return x.TokenId
-	}
-	return 0
-}
-
-func (x *GetTaskResponse) GetTask() string {
-	if x != nil {
-		return x.Task
+		return x.Token
 	}
 	return ""
 }
 
-type CreateTaskRequest struct {
+func (x *GetTaskResponse) GetAccountId() int64 {
+	if x != nil {
+		return x.AccountId
+	}
+	return 0
+}
+
+func (x *GetTaskResponse) GetReservedTokens() int64 {
+	if x != nil {
+		return x.ReservedTokens
+	}
+	return 0
+}
+
+type ListTasksByAccountIDRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	TokenId       int64                  `protobuf:"varint,1,opt,name=token_id,json=tokenId,proto3" json:"token_id,omitempty"`
-	Task          string                 `protobuf:"bytes,2,opt,name=task,proto3" json:"task,omitempty"`
+	AccountId     int64                  `protobuf:"varint,1,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
+func (x *ListTasksByAccountIDRequest) Reset() {
+	*x = ListTasksByAccountIDRequest{}
+	mi := &file_billing_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTasksByAccountIDRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTasksByAccountIDRequest) ProtoMessage() {}
+
+func (x *ListTasksByAccountIDRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_billing_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTasksByAccountIDRequest.ProtoReflect.Descriptor instead.
+func (*ListTasksByAccountIDRequest) Descriptor() ([]byte, []int) {
+	return file_billing_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ListTasksByAccountIDRequest) GetAccountId() int64 {
+	if x != nil {
+		return x.AccountId
+	}
+	return 0
+}
+
+type ListTasksByAccountIDResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Tasks         []*GetTaskResponse     `protobuf:"bytes,1,rep,name=tasks,proto3" json:"tasks,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTasksByAccountIDResponse) Reset() {
+	*x = ListTasksByAccountIDResponse{}
+	mi := &file_billing_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTasksByAccountIDResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTasksByAccountIDResponse) ProtoMessage() {}
+
+func (x *ListTasksByAccountIDResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_billing_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTasksByAccountIDResponse.ProtoReflect.Descriptor instead.
+func (*ListTasksByAccountIDResponse) Descriptor() ([]byte, []int) {
+	return file_billing_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ListTasksByAccountIDResponse) GetTasks() []*GetTaskResponse {
+	if x != nil {
+		return x.Tasks
+	}
+	return nil
+}
+
+type CreateTaskRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Token          string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	AccountId      int64                  `protobuf:"varint,2,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	ReservedTokens int64                  `protobuf:"varint,3,opt,name=reserved_tokens,json=reservedTokens,proto3" json:"reserved_tokens,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
 func (x *CreateTaskRequest) Reset() {
 	*x = CreateTaskRequest{}
-	mi := &file_billing_proto_msgTypes[6]
+	mi := &file_billing_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -347,7 +616,7 @@ func (x *CreateTaskRequest) String() string {
 func (*CreateTaskRequest) ProtoMessage() {}
 
 func (x *CreateTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_billing_proto_msgTypes[6]
+	mi := &file_billing_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -360,21 +629,28 @@ func (x *CreateTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateTaskRequest.ProtoReflect.Descriptor instead.
 func (*CreateTaskRequest) Descriptor() ([]byte, []int) {
-	return file_billing_proto_rawDescGZIP(), []int{6}
+	return file_billing_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *CreateTaskRequest) GetTokenId() int64 {
+func (x *CreateTaskRequest) GetToken() string {
 	if x != nil {
-		return x.TokenId
+		return x.Token
+	}
+	return ""
+}
+
+func (x *CreateTaskRequest) GetAccountId() int64 {
+	if x != nil {
+		return x.AccountId
 	}
 	return 0
 }
 
-func (x *CreateTaskRequest) GetTask() string {
+func (x *CreateTaskRequest) GetReservedTokens() int64 {
 	if x != nil {
-		return x.Task
+		return x.ReservedTokens
 	}
-	return ""
+	return 0
 }
 
 type CreateTaskResponse struct {
@@ -386,7 +662,7 @@ type CreateTaskResponse struct {
 
 func (x *CreateTaskResponse) Reset() {
 	*x = CreateTaskResponse{}
-	mi := &file_billing_proto_msgTypes[7]
+	mi := &file_billing_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -398,7 +674,7 @@ func (x *CreateTaskResponse) String() string {
 func (*CreateTaskResponse) ProtoMessage() {}
 
 func (x *CreateTaskResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_billing_proto_msgTypes[7]
+	mi := &file_billing_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -411,7 +687,7 @@ func (x *CreateTaskResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateTaskResponse.ProtoReflect.Descriptor instead.
 func (*CreateTaskResponse) Descriptor() ([]byte, []int) {
-	return file_billing_proto_rawDescGZIP(), []int{7}
+	return file_billing_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *CreateTaskResponse) GetId() int64 {
@@ -421,40 +697,149 @@ func (x *CreateTaskResponse) GetId() int64 {
 	return 0
 }
 
+type DeleteTaskRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteTaskRequest) Reset() {
+	*x = DeleteTaskRequest{}
+	mi := &file_billing_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteTaskRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTaskRequest) ProtoMessage() {}
+
+func (x *DeleteTaskRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_billing_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTaskRequest.ProtoReflect.Descriptor instead.
+func (*DeleteTaskRequest) Descriptor() ([]byte, []int) {
+	return file_billing_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *DeleteTaskRequest) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type DeleteTaskResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteTaskResponse) Reset() {
+	*x = DeleteTaskResponse{}
+	mi := &file_billing_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteTaskResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTaskResponse) ProtoMessage() {}
+
+func (x *DeleteTaskResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_billing_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTaskResponse.ProtoReflect.Descriptor instead.
+func (*DeleteTaskResponse) Descriptor() ([]byte, []int) {
+	return file_billing_proto_rawDescGZIP(), []int{14}
+}
+
 var File_billing_proto protoreflect.FileDescriptor
 
 const file_billing_proto_rawDesc = "" +
 	"\n" +
-	"\rbilling.proto\x12\abilling\"!\n" +
-	"\x0fGetTokenRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\"Q\n" +
-	"\x10GetTokenResponse\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x17\n" +
-	"\auser_id\x18\x02 \x01(\x03R\x06userId\x12\x14\n" +
-	"\x05token\x18\x03 \x01(\tR\x05token\"C\n" +
-	"\x12CreateTokenRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x14\n" +
-	"\x05token\x18\x02 \x01(\tR\x05token\"%\n" +
-	"\x13CreateTokenResponse\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\" \n" +
+	"\rbilling.proto\x12\abilling\"#\n" +
+	"\x11GetAccountRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\"n\n" +
+	"\x12GetAccountResponse\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x18\n" +
+	"\abalance\x18\x02 \x01(\x03R\abalance\x12\x18\n" +
+	"\areserve\x18\x03 \x01(\x03R\areserve\x12\x14\n" +
+	"\x05state\x18\x04 \x01(\x05R\x05state\"p\n" +
+	"\x14CreateAccountRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x18\n" +
+	"\abalance\x18\x02 \x01(\x03R\abalance\x12\x18\n" +
+	"\areserve\x18\x03 \x01(\x03R\areserve\x12\x14\n" +
+	"\x05state\x18\x04 \x01(\x05R\x05state\"'\n" +
+	"\x15CreateAccountResponse\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\"p\n" +
+	"\x14UpdateAccountRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x18\n" +
+	"\abalance\x18\x02 \x01(\x03R\abalance\x12\x18\n" +
+	"\areserve\x18\x03 \x01(\x03R\areserve\x12\x14\n" +
+	"\x05state\x18\x04 \x01(\x05R\x05state\"\x17\n" +
+	"\x15UpdateAccountResponse\" \n" +
 	"\x0eGetTaskRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\"P\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\"-\n" +
+	"\x15GetTaskByTokenRequest\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\"\x7f\n" +
 	"\x0fGetTaskResponse\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x19\n" +
-	"\btoken_id\x18\x02 \x01(\x03R\atokenId\x12\x12\n" +
-	"\x04task\x18\x03 \x01(\tR\x04task\"B\n" +
-	"\x11CreateTaskRequest\x12\x19\n" +
-	"\btoken_id\x18\x01 \x01(\x03R\atokenId\x12\x12\n" +
-	"\x04task\x18\x02 \x01(\tR\x04task\"$\n" +
-	"\x12CreateTaskResponse\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id2\x99\x01\n" +
-	"\fTokenService\x12?\n" +
-	"\bGetToken\x12\x18.billing.GetTokenRequest\x1a\x19.billing.GetTokenResponse\x12H\n" +
-	"\vCreateToken\x12\x1b.billing.CreateTokenRequest\x1a\x1c.billing.CreateTokenResponse2\x92\x01\n" +
-	"\vTaskService\x12<\n" +
-	"\aGetTask\x12\x17.billing.GetTaskRequest\x1a\x18.billing.GetTaskResponse\x12E\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x14\n" +
+	"\x05token\x18\x02 \x01(\tR\x05token\x12\x1d\n" +
 	"\n" +
-	"CreateTask\x12\x1a.billing.CreateTaskRequest\x1a\x1b.billing.CreateTaskResponseB-Z+my-voice-billing/internal/transport/grpc/pbb\x06proto3"
+	"account_id\x18\x03 \x01(\x03R\taccountId\x12'\n" +
+	"\x0freserved_tokens\x18\x04 \x01(\x03R\x0ereservedTokens\"<\n" +
+	"\x1bListTasksByAccountIDRequest\x12\x1d\n" +
+	"\n" +
+	"account_id\x18\x01 \x01(\x03R\taccountId\"N\n" +
+	"\x1cListTasksByAccountIDResponse\x12.\n" +
+	"\x05tasks\x18\x01 \x03(\v2\x18.billing.GetTaskResponseR\x05tasks\"q\n" +
+	"\x11CreateTaskRequest\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\x12\x1d\n" +
+	"\n" +
+	"account_id\x18\x02 \x01(\x03R\taccountId\x12'\n" +
+	"\x0freserved_tokens\x18\x03 \x01(\x03R\x0ereservedTokens\"$\n" +
+	"\x12CreateTaskResponse\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\"#\n" +
+	"\x11DeleteTaskRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\"\x14\n" +
+	"\x12DeleteTaskResponse2\xf7\x01\n" +
+	"\x0eAccountService\x12E\n" +
+	"\n" +
+	"GetAccount\x12\x1a.billing.GetAccountRequest\x1a\x1b.billing.GetAccountResponse\x12N\n" +
+	"\rCreateAccount\x12\x1d.billing.CreateAccountRequest\x1a\x1e.billing.CreateAccountResponse\x12N\n" +
+	"\rUpdateAccount\x12\x1d.billing.UpdateAccountRequest\x1a\x1e.billing.UpdateAccountResponse2\x8a\x03\n" +
+	"\vTaskService\x12<\n" +
+	"\aGetTask\x12\x17.billing.GetTaskRequest\x1a\x18.billing.GetTaskResponse\x12J\n" +
+	"\x0eGetTaskByToken\x12\x1e.billing.GetTaskByTokenRequest\x1a\x18.billing.GetTaskResponse\x12c\n" +
+	"\x14ListTasksByAccountID\x12$.billing.ListTasksByAccountIDRequest\x1a%.billing.ListTasksByAccountIDResponse\x12E\n" +
+	"\n" +
+	"CreateTask\x12\x1a.billing.CreateTaskRequest\x1a\x1b.billing.CreateTaskResponse\x12E\n" +
+	"\n" +
+	"DeleteTask\x12\x1a.billing.DeleteTaskRequest\x1a\x1b.billing.DeleteTaskResponseB-Z+my-voice-billing/internal/transport/grpc/pbb\x06proto3"
 
 var (
 	file_billing_proto_rawDescOnce sync.Once
@@ -468,31 +853,47 @@ func file_billing_proto_rawDescGZIP() []byte {
 	return file_billing_proto_rawDescData
 }
 
-var file_billing_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_billing_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_billing_proto_goTypes = []any{
-	(*GetTokenRequest)(nil),     // 0: billing.GetTokenRequest
-	(*GetTokenResponse)(nil),    // 1: billing.GetTokenResponse
-	(*CreateTokenRequest)(nil),  // 2: billing.CreateTokenRequest
-	(*CreateTokenResponse)(nil), // 3: billing.CreateTokenResponse
-	(*GetTaskRequest)(nil),      // 4: billing.GetTaskRequest
-	(*GetTaskResponse)(nil),     // 5: billing.GetTaskResponse
-	(*CreateTaskRequest)(nil),   // 6: billing.CreateTaskRequest
-	(*CreateTaskResponse)(nil),  // 7: billing.CreateTaskResponse
+	(*GetAccountRequest)(nil),            // 0: billing.GetAccountRequest
+	(*GetAccountResponse)(nil),           // 1: billing.GetAccountResponse
+	(*CreateAccountRequest)(nil),         // 2: billing.CreateAccountRequest
+	(*CreateAccountResponse)(nil),        // 3: billing.CreateAccountResponse
+	(*UpdateAccountRequest)(nil),         // 4: billing.UpdateAccountRequest
+	(*UpdateAccountResponse)(nil),        // 5: billing.UpdateAccountResponse
+	(*GetTaskRequest)(nil),               // 6: billing.GetTaskRequest
+	(*GetTaskByTokenRequest)(nil),        // 7: billing.GetTaskByTokenRequest
+	(*GetTaskResponse)(nil),              // 8: billing.GetTaskResponse
+	(*ListTasksByAccountIDRequest)(nil),  // 9: billing.ListTasksByAccountIDRequest
+	(*ListTasksByAccountIDResponse)(nil), // 10: billing.ListTasksByAccountIDResponse
+	(*CreateTaskRequest)(nil),            // 11: billing.CreateTaskRequest
+	(*CreateTaskResponse)(nil),           // 12: billing.CreateTaskResponse
+	(*DeleteTaskRequest)(nil),            // 13: billing.DeleteTaskRequest
+	(*DeleteTaskResponse)(nil),           // 14: billing.DeleteTaskResponse
 }
 var file_billing_proto_depIdxs = []int32{
-	0, // 0: billing.TokenService.GetToken:input_type -> billing.GetTokenRequest
-	2, // 1: billing.TokenService.CreateToken:input_type -> billing.CreateTokenRequest
-	4, // 2: billing.TaskService.GetTask:input_type -> billing.GetTaskRequest
-	6, // 3: billing.TaskService.CreateTask:input_type -> billing.CreateTaskRequest
-	1, // 4: billing.TokenService.GetToken:output_type -> billing.GetTokenResponse
-	3, // 5: billing.TokenService.CreateToken:output_type -> billing.CreateTokenResponse
-	5, // 6: billing.TaskService.GetTask:output_type -> billing.GetTaskResponse
-	7, // 7: billing.TaskService.CreateTask:output_type -> billing.CreateTaskResponse
-	4, // [4:8] is the sub-list for method output_type
-	0, // [0:4] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	8,  // 0: billing.ListTasksByAccountIDResponse.tasks:type_name -> billing.GetTaskResponse
+	0,  // 1: billing.AccountService.GetAccount:input_type -> billing.GetAccountRequest
+	2,  // 2: billing.AccountService.CreateAccount:input_type -> billing.CreateAccountRequest
+	4,  // 3: billing.AccountService.UpdateAccount:input_type -> billing.UpdateAccountRequest
+	6,  // 4: billing.TaskService.GetTask:input_type -> billing.GetTaskRequest
+	7,  // 5: billing.TaskService.GetTaskByToken:input_type -> billing.GetTaskByTokenRequest
+	9,  // 6: billing.TaskService.ListTasksByAccountID:input_type -> billing.ListTasksByAccountIDRequest
+	11, // 7: billing.TaskService.CreateTask:input_type -> billing.CreateTaskRequest
+	13, // 8: billing.TaskService.DeleteTask:input_type -> billing.DeleteTaskRequest
+	1,  // 9: billing.AccountService.GetAccount:output_type -> billing.GetAccountResponse
+	3,  // 10: billing.AccountService.CreateAccount:output_type -> billing.CreateAccountResponse
+	5,  // 11: billing.AccountService.UpdateAccount:output_type -> billing.UpdateAccountResponse
+	8,  // 12: billing.TaskService.GetTask:output_type -> billing.GetTaskResponse
+	8,  // 13: billing.TaskService.GetTaskByToken:output_type -> billing.GetTaskResponse
+	10, // 14: billing.TaskService.ListTasksByAccountID:output_type -> billing.ListTasksByAccountIDResponse
+	12, // 15: billing.TaskService.CreateTask:output_type -> billing.CreateTaskResponse
+	14, // 16: billing.TaskService.DeleteTask:output_type -> billing.DeleteTaskResponse
+	9,  // [9:17] is the sub-list for method output_type
+	1,  // [1:9] is the sub-list for method input_type
+	1,  // [1:1] is the sub-list for extension type_name
+	1,  // [1:1] is the sub-list for extension extendee
+	0,  // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_billing_proto_init() }
@@ -506,7 +907,7 @@ func file_billing_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_billing_proto_rawDesc), len(file_billing_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   2,
 		},
