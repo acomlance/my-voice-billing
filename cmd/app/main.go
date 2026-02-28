@@ -21,9 +21,6 @@ func main() {
 	flag.StringVar(&configPath, "config", "", "path to config file")
 	flag.Parse()
 	if configPath == "" {
-		configPath = os.Getenv("CONFIG_PATH")
-	}
-	if configPath == "" {
 		configPath = "config/config.yml"
 	}
 	cfg, err := config.Load(configPath)
