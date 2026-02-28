@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="be85b299-4ba6-4d30-af63-0777bd0de665" name="DDL data source Mapping">
+      <data-sources db="589ceb65-d005-4f98-9c85-c10a79bdf2ae" ddl="e11dd65c-62f1-4d0f-9579-4cc0a9609451" />
+      <scope>
+        <node kind="database" qname="voice_billing">
+          <node kind="schema" negative="1" />
+        </node>
+      </scope>
+    </mapping>
+    <mapping uuid="3f8d12dc-bde2-40a8-9a25-0ef4f8987f58" name="DDL data source Mapping [2]">
+      <data-sources db="589ceb65-d005-4f98-9c85-c10a79bdf2ae" ddl="287048c0-7abd-45f0-9398-0c252aa531ee" />
+      <scope>
+        <node kind="database" qname="voice_billing">
+          <node kind="schema" qname="public" />
+        </node>
+      </scope>
+    </mapping>
+  </component>
+  <component name="SqlDataSourceStorage">
+    <option name="dataSources">
+      <list>
+        <State>
+          <option name="id" value="287048c0-7abd-45f0-9398-0c252aa531ee" />
+          <option name="name" value="DDL data source" />
+          <option name="dbmsName" value="POSTGRES" />
+          <option name="urls">
+            <array>
+              <option value="file://$PROJECT_DIR$/sql" />
+            </array>
+          </option>
+          <option name="outLayout" value="File per object by schema.groovy" />
+        </State>
+      </list>
+    </option>
+  </component>
+</project>

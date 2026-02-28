@@ -1,0 +1,22 @@
+environment: dev
+
+grpc:
+  port: 50052
+
+database:
+  read:
+    host: localhost
+    port: 5432
+    user: postgres
+    password: root
+    database: voice_billing
+  write:
+    host: localhost
+    port: 5432
+    user: postgres
+    password: root
+    database: voice_billing
+
+log:
+  level: debug
+  dir: ./logs
