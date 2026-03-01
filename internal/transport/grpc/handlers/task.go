@@ -11,7 +11,7 @@ var _ pb.TaskServiceServer = (*TaskServer)(nil)
 
 type TaskLogic interface {
 	Create(ctx context.Context, t *models.Task) error
-	Delete(ctx context.Context, token string, closedTokens int64) error
+	Close(ctx context.Context, token string, closedTokens int64) error
 }
 
 type TaskServer struct {
@@ -34,9 +34,9 @@ func (s *TaskServer) CreateTask(ctx context.Context, req *pb.CreateTaskRequest) 
 	return &pb.CreateTaskResponse{Token: t.Token}, nil
 }
 
-func (s *TaskServer) DeleteTask(ctx context.Context, req *pb.DeleteTaskRequest) (*pb.DeleteTaskResponse, error) {
-	if err := s.taskLogic.Delete(ctx, req.GetToken(), req.GetClosedTokens()); err != nil {
-		return nil, handleErr(err, "DeleteTask")
+func (s *TaskServer) CloseTask(ctx context.Context, req *pb.CloseTaskRequest) (*pb.CloseTaskResponse, error) {
+	if err := s.taskLogic.Close(ctx, req.GetToken(), req.GetClosedTokens()); err != nil {
+		return nil, handleErr(err, "CloseTask")
 	}
-	return &pb.DeleteTaskResponse{}, nil
+	return &pb.CloseTaskResponse{}, nil
 }

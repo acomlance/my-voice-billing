@@ -16,7 +16,7 @@ type TaskRepository interface {
 	GetByToken(ctx context.Context, token string) (*models.Task, error)
 	ListByAccountID(ctx context.Context, accountID int64) ([]models.Task, error)
 	CreateWithReserveUpdate(ctx context.Context, t *models.Task) error
-	DeleteByTokenWithReserveUpdate(ctx context.Context, token string, closedTokens int64) error
+	CloseByTokenWithReserveUpdate(ctx context.Context, token string, closedTokens int64) error
 }
 
 type TaskRepo struct {
@@ -102,7 +102,7 @@ func (s *TaskRepo) CreateWithReserveUpdate(ctx context.Context, t *models.Task) 
 	return tx.Commit()
 }
 
-func (s *TaskRepo) DeleteByTokenWithReserveUpdate(ctx context.Context, token string, closedTokens int64) error {
+func (s *TaskRepo) CloseByTokenWithReserveUpdate(ctx context.Context, token string, closedTokens int64) error {
 	tx, err := s.writer.BeginTxx(ctx, nil)
 	if err != nil {
 		return err

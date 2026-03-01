@@ -34,9 +34,9 @@ func (l *TaskLogic) Create(ctx context.Context, t *models.Task) error {
 	return l.taskRepo.CreateWithReserveUpdate(ctx, t)
 }
 
-func (l *TaskLogic) Delete(ctx context.Context, token string, closedTokens int64) error {
+func (l *TaskLogic) Close(ctx context.Context, token string, closedTokens int64) error {
 	if closedTokens < 0 {
 		return domain.ErrInvalid
 	}
-	return l.taskRepo.DeleteByTokenWithReserveUpdate(ctx, token, closedTokens)
+	return l.taskRepo.CloseByTokenWithReserveUpdate(ctx, token, closedTokens)
 }

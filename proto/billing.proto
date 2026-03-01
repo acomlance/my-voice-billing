@@ -4,33 +4,9 @@ package billing;
 
 option go_package = "my-voice-billing/internal/transport/grpc/pb";
 
-// ========== Справочник enum для таблицы transactions ==========
-//
-// TransactionStatus (поле status):
-//   0 = IN_PROGRESS  — в процессе
-//   1 = APPROVED     — подтверждён
-//   2 = CANCELLED    — отменён
-//   3 = FAILED       — ошибка/не прошёл
-//
-// PaymentType (поле payment_type):
-//   1 = DEPOSIT  — пополнение
-//   2 = CHARGE   — списание
-//   3 = REFUND   — возврат
-//   4 = BONUS    — бонус
-//
-// PaymentMethod (поле payment_method):
-//   1 = CARD  — карта
-//   2 = BANK  — банк
-// ================================================================================
-
 service TaskService {
   rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
-  rpc DeleteTask(DeleteTaskRequest) returns (DeleteTaskResponse);
-}
-
-service TransactionService {
-  rpc CreateTransaction(CreateTransactionRequest) returns (CreateTransactionResponse);
-  rpc UpdateTransaction(UpdateTransactionRequest) returns (UpdateTransactionResponse);
+  rpc CloseTask(CloseTaskRequest) returns (CloseTaskResponse);
 }
 
 message CreateTaskRequest {
@@ -42,34 +18,9 @@ message CreateTaskResponse {
   string token = 1;
 }
 
-message DeleteTaskRequest {
+message CloseTaskRequest {
   string token = 1;
   int64 closed_tokens = 2;
 }
 
-message DeleteTaskResponse {}
-
-message CreateTransactionRequest {
-  int64 account_id = 1;
-  int32 status = 2;
-  int64 amount = 3;
-  int64 tokens = 4;
-  int32 payment_type = 5;
-  int32 payment_method = 6;
-  string payment_data = 7;
-  string description = 8;
-}
-
-message CreateTransactionResponse {
-  int64 id = 1;
-}
-
-message UpdateTransactionRequest {
-  int64 id = 1;
-  int32 status = 2;
-  int32 payment_method = 3;
-  string payment_data = 4;
-  string description = 5;
-}
-
-message UpdateTransactionResponse {}
+message CloseTaskResponse {}
