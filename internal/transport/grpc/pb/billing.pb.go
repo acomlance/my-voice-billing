@@ -120,7 +120,7 @@ func (x *CreateTaskResponse) GetToken() string {
 type DeleteTaskByTokenRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
-	ClosedTokens  int64                  `protobuf:"varint,2,opt,name=closed_tokens,json=closedTokens,proto3" json:"closed_tokens,omitempty"` // количество токенов, на которое таск закрывается (списывается с balance)
+	ClosedTokens  int64                  `protobuf:"varint,2,opt,name=closed_tokens,json=closedTokens,proto3" json:"closed_tokens,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -205,6 +205,262 @@ func (*DeleteTaskByTokenResponse) Descriptor() ([]byte, []int) {
 	return file_billing_proto_rawDescGZIP(), []int{3}
 }
 
+type CreateTransactionRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AccountId     int64                  `protobuf:"varint,1,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	Status        int32                  `protobuf:"varint,2,opt,name=status,proto3" json:"status,omitempty"`
+	Amount        int64                  `protobuf:"varint,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	Tokens        int64                  `protobuf:"varint,4,opt,name=tokens,proto3" json:"tokens,omitempty"`
+	PaymentType   int32                  `protobuf:"varint,5,opt,name=payment_type,json=paymentType,proto3" json:"payment_type,omitempty"`
+	PaymentMethod int32                  `protobuf:"varint,6,opt,name=payment_method,json=paymentMethod,proto3" json:"payment_method,omitempty"`
+	PaymentData   string                 `protobuf:"bytes,7,opt,name=payment_data,json=paymentData,proto3" json:"payment_data,omitempty"`
+	Description   string                 `protobuf:"bytes,8,opt,name=description,proto3" json:"description,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateTransactionRequest) Reset() {
+	*x = CreateTransactionRequest{}
+	mi := &file_billing_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateTransactionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTransactionRequest) ProtoMessage() {}
+
+func (x *CreateTransactionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_billing_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTransactionRequest.ProtoReflect.Descriptor instead.
+func (*CreateTransactionRequest) Descriptor() ([]byte, []int) {
+	return file_billing_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *CreateTransactionRequest) GetAccountId() int64 {
+	if x != nil {
+		return x.AccountId
+	}
+	return 0
+}
+
+func (x *CreateTransactionRequest) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *CreateTransactionRequest) GetAmount() int64 {
+	if x != nil {
+		return x.Amount
+	}
+	return 0
+}
+
+func (x *CreateTransactionRequest) GetTokens() int64 {
+	if x != nil {
+		return x.Tokens
+	}
+	return 0
+}
+
+func (x *CreateTransactionRequest) GetPaymentType() int32 {
+	if x != nil {
+		return x.PaymentType
+	}
+	return 0
+}
+
+func (x *CreateTransactionRequest) GetPaymentMethod() int32 {
+	if x != nil {
+		return x.PaymentMethod
+	}
+	return 0
+}
+
+func (x *CreateTransactionRequest) GetPaymentData() string {
+	if x != nil {
+		return x.PaymentData
+	}
+	return ""
+}
+
+func (x *CreateTransactionRequest) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+type CreateTransactionResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateTransactionResponse) Reset() {
+	*x = CreateTransactionResponse{}
+	mi := &file_billing_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateTransactionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTransactionResponse) ProtoMessage() {}
+
+func (x *CreateTransactionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_billing_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTransactionResponse.ProtoReflect.Descriptor instead.
+func (*CreateTransactionResponse) Descriptor() ([]byte, []int) {
+	return file_billing_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *CreateTransactionResponse) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type UpdateTransactionRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Status        int32                  `protobuf:"varint,2,opt,name=status,proto3" json:"status,omitempty"`
+	PaymentMethod int32                  `protobuf:"varint,3,opt,name=payment_method,json=paymentMethod,proto3" json:"payment_method,omitempty"`
+	PaymentData   string                 `protobuf:"bytes,4,opt,name=payment_data,json=paymentData,proto3" json:"payment_data,omitempty"`
+	Description   string                 `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateTransactionRequest) Reset() {
+	*x = UpdateTransactionRequest{}
+	mi := &file_billing_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateTransactionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateTransactionRequest) ProtoMessage() {}
+
+func (x *UpdateTransactionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_billing_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateTransactionRequest.ProtoReflect.Descriptor instead.
+func (*UpdateTransactionRequest) Descriptor() ([]byte, []int) {
+	return file_billing_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *UpdateTransactionRequest) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UpdateTransactionRequest) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *UpdateTransactionRequest) GetPaymentMethod() int32 {
+	if x != nil {
+		return x.PaymentMethod
+	}
+	return 0
+}
+
+func (x *UpdateTransactionRequest) GetPaymentData() string {
+	if x != nil {
+		return x.PaymentData
+	}
+	return ""
+}
+
+func (x *UpdateTransactionRequest) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+type UpdateTransactionResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateTransactionResponse) Reset() {
+	*x = UpdateTransactionResponse{}
+	mi := &file_billing_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateTransactionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateTransactionResponse) ProtoMessage() {}
+
+func (x *UpdateTransactionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_billing_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateTransactionResponse.ProtoReflect.Descriptor instead.
+func (*UpdateTransactionResponse) Descriptor() ([]byte, []int) {
+	return file_billing_proto_rawDescGZIP(), []int{7}
+}
+
 var File_billing_proto protoreflect.FileDescriptor
 
 const file_billing_proto_rawDesc = "" +
@@ -219,11 +475,33 @@ const file_billing_proto_rawDesc = "" +
 	"\x18DeleteTaskByTokenRequest\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12#\n" +
 	"\rclosed_tokens\x18\x02 \x01(\x03R\fclosedTokens\"\x1b\n" +
-	"\x19DeleteTaskByTokenResponse2\xb0\x01\n" +
+	"\x19DeleteTaskByTokenResponse\"\x90\x02\n" +
+	"\x18CreateTransactionRequest\x12\x1d\n" +
+	"\n" +
+	"account_id\x18\x01 \x01(\x03R\taccountId\x12\x16\n" +
+	"\x06status\x18\x02 \x01(\x05R\x06status\x12\x16\n" +
+	"\x06amount\x18\x03 \x01(\x03R\x06amount\x12\x16\n" +
+	"\x06tokens\x18\x04 \x01(\x03R\x06tokens\x12!\n" +
+	"\fpayment_type\x18\x05 \x01(\x05R\vpaymentType\x12%\n" +
+	"\x0epayment_method\x18\x06 \x01(\x05R\rpaymentMethod\x12!\n" +
+	"\fpayment_data\x18\a \x01(\tR\vpaymentData\x12 \n" +
+	"\vdescription\x18\b \x01(\tR\vdescription\"+\n" +
+	"\x19CreateTransactionResponse\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\"\xae\x01\n" +
+	"\x18UpdateTransactionRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x16\n" +
+	"\x06status\x18\x02 \x01(\x05R\x06status\x12%\n" +
+	"\x0epayment_method\x18\x03 \x01(\x05R\rpaymentMethod\x12!\n" +
+	"\fpayment_data\x18\x04 \x01(\tR\vpaymentData\x12 \n" +
+	"\vdescription\x18\x05 \x01(\tR\vdescription\"\x1b\n" +
+	"\x19UpdateTransactionResponse2\xb0\x01\n" +
 	"\vTaskService\x12E\n" +
 	"\n" +
 	"CreateTask\x12\x1a.billing.CreateTaskRequest\x1a\x1b.billing.CreateTaskResponse\x12Z\n" +
-	"\x11DeleteTaskByToken\x12!.billing.DeleteTaskByTokenRequest\x1a\".billing.DeleteTaskByTokenResponseB-Z+my-voice-billing/internal/transport/grpc/pbb\x06proto3"
+	"\x11DeleteTaskByToken\x12!.billing.DeleteTaskByTokenRequest\x1a\".billing.DeleteTaskByTokenResponse2\xcc\x01\n" +
+	"\x12TransactionService\x12Z\n" +
+	"\x11CreateTransaction\x12!.billing.CreateTransactionRequest\x1a\".billing.CreateTransactionResponse\x12Z\n" +
+	"\x11UpdateTransaction\x12!.billing.UpdateTransactionRequest\x1a\".billing.UpdateTransactionResponseB-Z+my-voice-billing/internal/transport/grpc/pbb\x06proto3"
 
 var (
 	file_billing_proto_rawDescOnce sync.Once
@@ -237,20 +515,28 @@ func file_billing_proto_rawDescGZIP() []byte {
 	return file_billing_proto_rawDescData
 }
 
-var file_billing_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_billing_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_billing_proto_goTypes = []any{
 	(*CreateTaskRequest)(nil),         // 0: billing.CreateTaskRequest
 	(*CreateTaskResponse)(nil),        // 1: billing.CreateTaskResponse
 	(*DeleteTaskByTokenRequest)(nil),  // 2: billing.DeleteTaskByTokenRequest
 	(*DeleteTaskByTokenResponse)(nil), // 3: billing.DeleteTaskByTokenResponse
+	(*CreateTransactionRequest)(nil),  // 4: billing.CreateTransactionRequest
+	(*CreateTransactionResponse)(nil), // 5: billing.CreateTransactionResponse
+	(*UpdateTransactionRequest)(nil),  // 6: billing.UpdateTransactionRequest
+	(*UpdateTransactionResponse)(nil), // 7: billing.UpdateTransactionResponse
 }
 var file_billing_proto_depIdxs = []int32{
 	0, // 0: billing.TaskService.CreateTask:input_type -> billing.CreateTaskRequest
 	2, // 1: billing.TaskService.DeleteTaskByToken:input_type -> billing.DeleteTaskByTokenRequest
-	1, // 2: billing.TaskService.CreateTask:output_type -> billing.CreateTaskResponse
-	3, // 3: billing.TaskService.DeleteTaskByToken:output_type -> billing.DeleteTaskByTokenResponse
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
+	4, // 2: billing.TransactionService.CreateTransaction:input_type -> billing.CreateTransactionRequest
+	6, // 3: billing.TransactionService.UpdateTransaction:input_type -> billing.UpdateTransactionRequest
+	1, // 4: billing.TaskService.CreateTask:output_type -> billing.CreateTaskResponse
+	3, // 5: billing.TaskService.DeleteTaskByToken:output_type -> billing.DeleteTaskByTokenResponse
+	5, // 6: billing.TransactionService.CreateTransaction:output_type -> billing.CreateTransactionResponse
+	7, // 7: billing.TransactionService.UpdateTransaction:output_type -> billing.UpdateTransactionResponse
+	4, // [4:8] is the sub-list for method output_type
+	0, // [0:4] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -267,9 +553,9 @@ func file_billing_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_billing_proto_rawDesc), len(file_billing_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   8,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   2,
 		},
 		GoTypes:           file_billing_proto_goTypes,
 		DependencyIndexes: file_billing_proto_depIdxs,

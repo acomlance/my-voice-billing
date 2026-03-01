@@ -12,7 +12,6 @@ import (
 	"github.com/rs/zerolog/pkgerrors"
 )
 
-// ParseLevel преобразует строку уровня в zerolog.Level (по умолчанию info)
 func ParseLevel(s string) zerolog.Level {
 	switch strings.ToLower(strings.TrimSpace(s)) {
 	case "trace":
@@ -34,7 +33,6 @@ func ParseLevel(s string) zerolog.Level {
 	}
 }
 
-// InitColorfulLogger инициализирует цветной лог с zerolog
 func InitColorfulLogger() {
 	os.Setenv("TERM", "xterm-256color")
 
@@ -81,7 +79,6 @@ func InitColorfulLogger() {
 	zerologlog.Logger = logger
 }
 
-// InitFromConfig инициализирует глобальный логгер из конфига: level и dir (путь к папке логов или файлу)
 func InitFromConfig(level string, dir string) {
 	zerolog.ErrorStackMarshaler = pkgerrors.MarshalStack
 	lvl := ParseLevel(level)

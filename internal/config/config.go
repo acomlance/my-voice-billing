@@ -43,7 +43,6 @@ func (c *Config) Connector(alias string) (DBConnector, bool) {
 	return conn, ok
 }
 
-// Load читает конфиг из YAML-файла; дефолты задаются только здесь
 func Load(path string) (*Config, error) {
 	v := viper.New()
 	v.SetConfigFile(path)
@@ -61,7 +60,6 @@ func Load(path string) (*Config, error) {
 	return &cfg, nil
 }
 
-// Validate проверяет конфиг перед использованием (порт, коннектор write)
 func Validate(c *Config) error {
 	if c.Grpc.Port <= 0 {
 		return fmt.Errorf("grpc.port must be positive")

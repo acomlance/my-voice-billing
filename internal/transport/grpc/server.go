@@ -18,6 +18,7 @@ func NewServer(c *container.Container) *grpc.Server {
 	}
 	s := grpc.NewServer(opts...)
 	pb.RegisterTaskServiceServer(s, handlers.NewTaskServer(c.TaskLogic))
+	pb.RegisterTransactionServiceServer(s, handlers.NewTransactionServer(c.TransactionLogic))
 	reflection.Register(s)
 	return s
 }

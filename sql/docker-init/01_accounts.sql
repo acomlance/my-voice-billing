@@ -13,3 +13,6 @@ create table public.accounts
 
 alter table public.accounts
     owner to postgres;
+
+insert into public.accounts (id, balance, reserve, state)
+values (1, 100000, 0, 0);

@@ -10,9 +10,9 @@ import (
 )
 
 const (
-	ErrDuplicateEntry   = "duplicate key"
-	ErrForeignKey       = "foreign key"
-	PgCodeCheckViolation  = "23514"
+	ErrDuplicateEntry    = "duplicate key"
+	ErrForeignKey        = "foreign key"
+	PgCodeCheckViolation = "23514"
 )
 
 func IsNoRowsError(err error) bool {
@@ -27,7 +27,6 @@ func IsForeignKeyError(err error) bool {
 	return err != nil && strings.Contains(strings.ToLower(err.Error()), ErrForeignKey)
 }
 
-// IsCheckConstraintError — нарушение check (например balance >= reserve)
 func IsCheckConstraintError(err error) bool {
 	var pgErr *pgconn.PgError
 	if err != nil && errors.As(err, &pgErr) {

@@ -15,9 +15,7 @@ type TaskRepository interface {
 	GetByID(ctx context.Context, id int64) (*models.Task, error)
 	GetByToken(ctx context.Context, token string) (*models.Task, error)
 	ListByAccountID(ctx context.Context, accountID int64) ([]models.Task, error)
-	Create(ctx context.Context, t *models.Task) error
 	CreateWithReserveUpdate(ctx context.Context, t *models.Task) error
-	Delete(ctx context.Context, id int64) error
 	DeleteByTokenWithReserveUpdate(ctx context.Context, token string, closedTokens int64) error
 }
 
@@ -66,23 +64,6 @@ func (s *TaskRepo) ListByAccountID(ctx context.Context, accountID int64) ([]mode
 	return list, nil
 }
 
-func (s *TaskRepo) Create(ctx context.Context, t *models.Task) error {
-	query := fmt.Sprintf("INSERT INTO %s (token, account_id, reserved_tokens, date_create) VALUES ($1, $2, $3, NOW()) RETURNING id, date_create", db.TableTasks)
-	row := s.writer.QueryRowxContext(ctx, query, t.Token, t.AccountId, t.ReservedTokens)
-	err := row.Scan(&t.Id, &t.DateCreate)
-	if err != nil {
-		if db.IsDuplicateError(err) {
-			return fmt.Errorf("task: %w", domain.ErrConflict)
-		}
-		if db.IsForeignKeyError(err) {
-			return fmt.Errorf("task: %w", domain.ErrNotFound)
-		}
-		return err
-	}
-	return nil
-}
-
-// CreateWithReserveUpdate суммирует reserved_tokens по аккаунту, обновляет accounts.reserve, создаёт задачу; при reserve > balance — ошибка.
 func (s *TaskRepo) CreateWithReserveUpdate(ctx context.Context, t *models.Task) error {
 	tx, err := s.writer.BeginTxx(ctx, nil)
 	if err != nil {
@@ -90,6 +71,10 @@ func (s *TaskRepo) CreateWithReserveUpdate(ctx context.Context, t *models.Task) 
 	}
 	defer func() { _ = tx.Rollback() }()
 
+	lock := fmt.Sprintf("SELECT 1 FROM %s WHERE id = $1 FOR UPDATE", db.TableAccounts)
+	if _, err := tx.ExecContext(ctx, lock, t.AccountId); err != nil {
+		return err
+	}
 	var sum int64
 	qSum := fmt.Sprintf("SELECT COALESCE(SUM(reserved_tokens), 0) FROM %s WHERE account_id = $1", db.TableTasks)
 	if err := tx.GetContext(ctx, &sum, qSum, t.AccountId); err != nil {
@@ -117,20 +102,6 @@ func (s *TaskRepo) CreateWithReserveUpdate(ctx context.Context, t *models.Task) 
 	return tx.Commit()
 }
 
-func (s *TaskRepo) Delete(ctx context.Context, id int64) error {
-	query := fmt.Sprintf("DELETE FROM %s WHERE id = $1", db.TableTasks)
-	res, err := s.writer.ExecContext(ctx, query, id)
-	if err != nil {
-		return err
-	}
-	affected, _ := res.RowsAffected()
-	if affected == 0 {
-		return fmt.Errorf("task: %w", domain.ErrNotFound)
-	}
-	return nil
-}
-
-// DeleteByTokenWithReserveUpdate удаляет задачу; уменьшает reserve на reserved_tokens, balance на closedTokens.
 func (s *TaskRepo) DeleteByTokenWithReserveUpdate(ctx context.Context, token string, closedTokens int64) error {
 	tx, err := s.writer.BeginTxx(ctx, nil)
 	if err != nil {

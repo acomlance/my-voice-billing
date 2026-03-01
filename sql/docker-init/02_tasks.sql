@@ -3,7 +3,7 @@ create table public.tasks
     id              bigserial
         constraint tasks_pk
             primary key,
-    token           varchar(128) default ''::character varying not null,
+    token           varchar(36) not null,
     account_id      bigint      default 0 not null
         constraint tasks_accounts_id_fk
             references public.accounts

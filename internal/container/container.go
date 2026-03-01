@@ -18,12 +18,14 @@ var (
 type Container struct {
 	Config *config.Config
 
-	DB          *db.Manager
-	AccountRepo *repo.AccountRepo
-	TaskRepo    *repo.TaskRepo
+	DB               *db.Manager
+	AccountRepo      *repo.AccountRepo
+	TaskRepo         *repo.TaskRepo
+	TransactionRepo  *repo.TransactionRepo
 
-	AccountLogic *logic.AccountLogic
-	TaskLogic    *logic.TaskLogic
+	AccountLogic     *logic.AccountLogic
+	TaskLogic        *logic.TaskLogic
+	TransactionLogic *logic.TransactionLogic
 }
 
 func Init(ctx context.Context, cfg *config.Config) error {
@@ -37,8 +39,10 @@ func Init(ctx context.Context, cfg *config.Config) error {
 		}
 		c.AccountRepo = repo.NewAccountRepo(c.DB)
 		c.TaskRepo = repo.NewTaskRepo(c.DB)
+		c.TransactionRepo = repo.NewTransactionRepo(c.DB)
 		c.AccountLogic = logic.NewAccountLogic(c.AccountRepo)
 		c.TaskLogic = logic.NewTaskLogic(c.TaskRepo, c.AccountRepo)
+		c.TransactionLogic = logic.NewTransactionLogic(c.TransactionRepo, c.AccountRepo)
 	})
 	return initErr
 }
