@@ -1,21 +1,20 @@
-.PHONY: stop down start rebuild clean
+.PHONY: down up rebuild clean
 
-# Остановить все контейнеры
-stop:
+# Закрыть все контейнеры
+down:
 	docker compose down
 
-down: stop
+# Запуск postgres + app (gRPC сервер) + grpcui
+up:
+	docker compose up -d postgres app grpcui
 
-# Удалить контейнеры и тома проекта, затем неиспользуемые контейнеры (если что-то повисло)
+# Остановить контейнеры, пересобрать app без кэша, поднять стек
+rebuild:
+	make down
+	docker compose build --no-cache app
+	make up
+
+# Удалить контейнеры и тома, неиспользуемые контейнеры (если что-то повисло)
 clean:
 	docker compose down -v
 	docker container prune -f
-
-# 2. Запуск postgres + grpcui (app запускается из IDE с config.yml, БД localhost:5432)
-start:
-	docker compose up -d postgres grpcui
-
-# Ребилд postgres (чистая БД, sql/docker-init) и подъём postgres+grpcui (http://localhost:9010)
-rebuild:
-	docker compose down -v
-	docker compose up -d postgres grpcui

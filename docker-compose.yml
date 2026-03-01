@@ -16,11 +16,21 @@ services:
       timeout: 5s
       retries: 10
 
+  app:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "50052:50052"
+
   grpcui:
     image: fullstorydev/grpcui:latest
-    command: ["-plaintext", "host.docker.internal:50052"]
+    command: ["-bind", "0.0.0.0", "-port", "8080", "-connect-fail-fast=false", "-plaintext", "app:50052"]
     ports:
       - "9010:8080"
+    depends_on:
+      - app
 
 volumes:
   postgres_data:

@@ -25,7 +25,7 @@ option go_package = "my-voice-billing/internal/transport/grpc/pb";
 
 service TaskService {
   rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
-  rpc DeleteTaskByToken(DeleteTaskByTokenRequest) returns (DeleteTaskByTokenResponse);
+  rpc DeleteTask(DeleteTaskRequest) returns (DeleteTaskResponse);
 }
 
 service TransactionService {
@@ -42,12 +42,12 @@ message CreateTaskResponse {
   string token = 1;
 }
 
-message DeleteTaskByTokenRequest {
+message DeleteTaskRequest {
   string token = 1;
   int64 closed_tokens = 2;
 }
 
-message DeleteTaskByTokenResponse {}
+message DeleteTaskResponse {}
 
 message CreateTransactionRequest {
   int64 account_id = 1;

@@ -21,7 +21,7 @@ func NewTransactionServer(transactionLogic TransactionLogic) *TransactionServer 
 	return &TransactionServer{transactionLogic: transactionLogic}
 }
 
-func (s *TransactionServer) Create(ctx context.Context, req *pb.CreateTransactionRequest) (*pb.CreateTransactionResponse, error) {
+func (s *TransactionServer) CreateTransaction(ctx context.Context, req *pb.CreateTransactionRequest) (*pb.CreateTransactionResponse, error) {
 	t := &models.Transaction{
 		AccountId:     req.GetAccountId(),
 		Status:        int16(req.GetStatus()),
@@ -33,12 +33,12 @@ func (s *TransactionServer) Create(ctx context.Context, req *pb.CreateTransactio
 		Description:   req.GetDescription(),
 	}
 	if err := s.transactionLogic.Create(ctx, t); err != nil {
-		return nil, handleErr(err, "Create")
+		return nil, handleErr(err, "CreateTransaction")
 	}
 	return &pb.CreateTransactionResponse{Id: t.Id}, nil
 }
 
-func (s *TransactionServer) Update(ctx context.Context, req *pb.UpdateTransactionRequest) (*pb.UpdateTransactionResponse, error) {
+func (s *TransactionServer) UpdateTransaction(ctx context.Context, req *pb.UpdateTransactionRequest) (*pb.UpdateTransactionResponse, error) {
 	t := &models.Transaction{
 		Id:            req.GetId(),
 		Status:        int16(req.GetStatus()),
@@ -47,7 +47,7 @@ func (s *TransactionServer) Update(ctx context.Context, req *pb.UpdateTransactio
 		Description:   req.GetDescription(),
 	}
 	if err := s.transactionLogic.Update(ctx, t); err != nil {
-		return nil, handleErr(err, "Update")
+		return nil, handleErr(err, "UpdateTransaction")
 	}
 	return &pb.UpdateTransactionResponse{}, nil
 }
