@@ -7,6 +7,11 @@ import (
 	"github.com/spf13/viper"
 )
 
+const (
+	EnvDev  = "dev"
+	EnvProd = "prod"
+)
+
 type DBConnector struct {
 	Host            string        `mapstructure:"host"`
 	Port            int           `mapstructure:"port"`

@@ -3,6 +3,7 @@ package grpc
 import (
 	"net"
 
+	"my-voice-billing/internal/config"
 	"my-voice-billing/internal/container"
 	"my-voice-billing/internal/transport/grpc/handlers"
 	"my-voice-billing/internal/transport/grpc/middleware"
@@ -13,8 +14,12 @@ import (
 )
 
 func NewServer(c *container.Container) *grpc.Server {
+	var isDev bool
+	if c.Config != nil {
+		isDev = c.Config.Environment == config.EnvDev
+	}
 	opts := []grpc.ServerOption{
-		grpc.ChainUnaryInterceptor(middleware.UnaryRecovery),
+		grpc.ChainUnaryInterceptor(middleware.UnaryRecovery, middleware.UnaryTiming(isDev)),
 	}
 	s := grpc.NewServer(opts...)
 	pb.RegisterTaskServiceServer(s, handlers.NewTaskServer(c.TaskLogic))
